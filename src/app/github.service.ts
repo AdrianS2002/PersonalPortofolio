@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { environment } from '../environments/environment';
+import { environment } from '../environments/environment.prod';
 
 export interface Repo {
   id: number;
