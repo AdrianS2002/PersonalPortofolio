@@ -1,0 +1,27 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with: node-version: '18'
+      - run: npm ci
+      - name: Generate prod environment
+        run: |
+          cat > src/environments/environment.prod.ts << 'EOF'
+          export const environment = {
+            production: true,
+            githubToken: '${{ secrets.GH_PAT }}'
+          };
+          EOF
+      - run: npm run build -- --configuration=production --base-href=/PersonalPortofolio/
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_PAT }}
+          publish_dir: ./dist/browser   # sau dist/personal-portfolio, după cum e în proiectul tău
