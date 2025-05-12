@@ -1,0 +1,49 @@
+<div class="container">
+  <aside>
+    <img src="poza.png" alt="poza">
+    <h1>Adrian Schiop</h1>
+    <p>Frontend developer at NTT Data</p>
+    <p>Student at Tehnical University of Cluj Napoca</p>
+    <a href="CV_Schiop_Adrian(1).pdf" download="downloadCV">
+      <button>Download CV</button>
+    </a>
+    <div id="contact">
+      <a href="https://www.linkedin.com/in/adrian-marian-schiop-2666b3270/"><img class="icon" src="linkedin.png"
+          alt="linkedin"></a>
+      <a href="https://github.com/AdrianS2002"><img class="icon" src="github-logo.png" alt="github"></a>
+      <a href="https://www.instagram.com/adrian.marian.s/"><img class="icon" src="instagram.png" alt="insta"></a>
+    </div>
+
+  </aside>
+  <main>
+    <section id="proiecte" class="projects-grid">
+      <h2>Recent Projects</h2>
+      <div class="project-card" *ngFor="let repo of repos">
+        <a class="card-link" [href]="repo.html_url" target="_blank" rel="noopener">
+          <h3>{{ repo.name }}</h3>
+        </a>
+        <p class="description" *ngIf="repo.description">{{ repo.description }}</p>
+        <div class="tech-list">
+          <span *ngFor="let tech of repo.topics">{{ tech }}</span>
+        </div>
+        <div class="language" *ngIf="repo.languages?.length; else noLang">
+          <h4>Languages:</h4>
+          <span *ngFor="let lang of repo.languages">{{ lang }} </span>
+        </div>
+        <ng-template #noLang>
+          <small>No language data</small>
+        </ng-template>
+
+        <div class="readme-content" *ngIf="repo.readme">
+        <div [innerHTML]="repo.readme | markdown"></div>
+      </div>
+        <small class="created-at">Created on {{ repo.created_at | date:'mediumDate' }}</small>
+      </div>
+
+    </section>
+  </main>
+
+</div>
+<footer>
+  <p>&copy; Schiop Adrian </p>
+</footer>
